@@ -1,0 +1,30 @@
+Installing Apache and PHP: https://www.raspberrypi.org/documentation/remote-access/web-server/apache.md
+    RUN: sudo apt install apache2 -y
+    Now going to http://[raspberry pi ip] should show you a page that says Apache2 Debian Default...
+    Or localhost if you're viewing from RPi
+    
+    RUN: sudo apt install php libapache2-mod-php -y
+    Navigate to /var/www/html/, replace index.html with employees.php. 
+        You'll have to change the ownership/permissions of the file and folder, see link
+        When everything is done go to http://[raspberry pi ip]/employees.php to see the page
+
+Installing MySQL and setting up database:
+https://randomnerdtutorials.com/raspberry-pi-apache-mysql-php-lamp-server/ 
+https://www.a2hosting.com/kb/developer-corner/mysql/managing-mysql-databases-and-users-from-the-command-line 
+    RUN:
+        sudo apt install mariadb-server php-mysql -y
+        sudo service apache2 restart
+
+    RUN:
+        mysql -u root -p
+        GRANT ALL PRIVILEGES ON *.* TO 'user'@'localhost' IDENTIFIED BY 'password'; 
+        (exit mysql and go back to terminal command line)
+        mysql -u user -p < create_schema.sql # create the table
+
+Python:
+    pip3 install mysql-connector-python
+
+    Functions in db_functions.python
+        Use: db=connect_to_db() at the top of your camera code
+        In the camera code main loop, once the new rows has been processed, use insert_row(db, row)
+        get_rows(db) to check database contents, use as needed
